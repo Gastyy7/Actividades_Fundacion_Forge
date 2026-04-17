@@ -65,7 +65,7 @@
 #     for i in range(len(lista)):
 #         print(f"Valores de la clave {llave}: {lista[i][llave]}")
 
-# iterarDiccionario2("nombre", cantantes2)
+# iterarDiccionario2("pais", cantantes2)
 
 # 4. Iterar a través de un diccionario con valores de lista
 
@@ -82,5 +82,6 @@
 #         print(f'{len(lista)} {clave.upper()}')
 #         for i in lista:
 #             print(f'{i}')
+#         print("")
 
 # imprimirInformacion(costa_rica)
