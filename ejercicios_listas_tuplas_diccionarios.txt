@@ -1,0 +1,128 @@
+#1) Carga de Datos:
+# Crea una lista de diccionarios llamada ventas, donde cada diccionario represente una venta. Cada venta debe incluir las siguientes claves:
+# «fecha»: una cadena de texto que represente la fecha de la venta (por ejemplo, «2024-01-01»).
+# «producto»: una cadena de texto que represente el nombre del producto vendido.
+# «cantidad»: un número entero que represente la cantidad de productos vendidos.
+# «precio»: un número flotante que represente el precio unitario del producto.
+
+ventas = [
+    {'fecha': '2024-01-01', 'producto': 'remera', 'cantidad': 7, 'precio': 2000},
+    {'fecha': '2024-01-02', 'producto': 'pantalon', 'cantidad': 3, 'precio': 3000},
+    {'fecha': '2024-01-03', 'producto': 'campera', 'cantidad': 2, 'precio': 4000},
+    {'fecha': '2024-01-04', 'producto': 'zapatilla', 'cantidad': 10, 'precio': 1500},
+    {'fecha': '2024-01-05', 'producto': 'media', 'cantidad': 9, 'precio': 500},
+    {'fecha': '2024-01-06', 'producto': 'musculosa', 'cantidad': 5, 'precio': 1000}
+]
+
+#2) Cálculo de Ingresos Totales:
+# Utiliza un bucle para iterar sobre la lista ventas y calcular los ingresos totales generados por todas las ventas. Los ingresos totales se calculan multiplicando la cantidad vendida por el precio unitario para cada venta y sumando los resultados.
+
+total = 0
+for i in range(len(ventas)):
+    sub_total = ventas[i]['cantidad'] * ventas[i]['precio']
+    total += sub_total
+print(f'Total: {total}')
+
+Explicación: Primero se crea la variable total en 0 para guardar la suma de todas las ventas. Después, con el for se recorre la lista ventas una por una. En cada vuelta se calcula el sub_total multiplicando la cantidad por el precio de esa venta. Luego ese resultado se suma en la variable total. Al final, con print() se muestra el total de ingresos generado por todas las ventas.
+
+Imprime: Total: 55500
+
+#3) Análisis del Producto Más Vendido:
+# Crea un diccionario llamado ventas_por_producto donde las claves sean los nombres de los productos y los valores sean la cantidad total vendida de cada producto.
+# Utiliza este diccionario para identificar el producto que tuvo la mayor cantidad total vendida.
+
+ventas_por_producto = {}
+
+for venta in ventas:
+    prod = venta["producto"]
+    cant = venta["cantidad"]
+    if prod in ventas_por_producto:
+        ventas_por_producto[prod] += cant
+    else:
+        ventas_por_producto[prod] = cant
+mayor_vendido = max(ventas_por_producto, key=ventas_por_producto.get)
+canti_mayor_vendido = max(ventas_por_producto.values())
+print(f"Producto mas vendido: {mayor_vendido} Cantidad: {canti_mayor_vendido}")
+
+Explicación: Se crea el diccionario ventas_por_producto vacío para guardar la cantidad vendida de cada producto. Después, con el for se recorre cada venta de la lista ventas. En cada vuelta se guarda el nombre del producto en prod y la cantidad en cant. Si el producto ya está en el diccionario, se suma la nueva cantidad a la que ya tenía, y si no está, se crea con esa cantidad inicial. Luego, con max() se busca cuál fue el producto con mayor cantidad vendida. Finalmente, se muestra en pantalla el nombre del producto más vendido junto con su cantidad total.
+
+Imprime: Producto mas vendido: zapatilla Cantidad: 10
+
+#4) Promedio de Precio por Producto:
+# Crea un diccionario llamado precios_por_producto donde las claves sean los nombres de los productos y los valores sean tuplas. Cada tupla debe contener dos elementos: la suma de los precios de venta de todas las unidades vendidas y la cantidad total de unidades vendidas.
+# Calcula el precio promedio de venta para cada producto utilizando la información de este diccionario.
+
+precios_por_producto = {}
+
+for venta in ventas:
+    prod = venta["producto"]
+    cant = venta["cantidad"]
+    precio = venta["precio"]
+    if prod not in precios_por_producto:
+        precios_por_producto[prod] = (0, 0)
+    suma_total, cantidad_total = precios_por_producto[prod]
+    precios_por_producto[prod] = (suma_total + precio * cant, cantidad_total + cant)
+
+print(precios_por_producto)
+
+for producto, (suma, cantidad) in precios_por_producto.items():
+    promedio = suma / cantidad
+    print(f"Producto: {producto}, promedio: {promedio}")
+
+Explicación: Primeramente se construye el diccionario precios_por_producto que esta vacío para guardar la suma total de precios y la cantidad vendida de cada producto. Después, con el for se recorre cada venta de la lista ventas. En cada vuelta se obtiene el nombre del producto, la cantidad y el precio. Si el producto no existe en el diccionario, se crea con valores iniciales en cero. Luego, se actualiza guardando la suma del importe total (precio * cantidad) y la cantidad acumulada del producto. Finalmente, se recorre el diccionario y se divide la suma total por la cantidad para obtener el precio promedio de venta de cada producto.
+
+Imprime: {'remera': (14000, 7), 'pantalon': (9000, 3), 'campera': (8000, 2), 'zapatilla': (15000, 10), 'media': (4500, 9), 'musculosa': (5000, 5)}
+Producto: remera, promedio: 2000.0
+Producto: pantalon, promedio: 3000.0
+Producto: campera, promedio: 4000.0
+Producto: zapatilla, promedio: 1500.0
+Producto: media, promedio: 500.0
+Producto: musculosa, promedio: 1000.0
+
+#5) Ventas por Día:
+# Crea un diccionario llamado ingresos_por_dia donde las claves sean las fechas y los valores sean los ingresos totales generados en cada día.
+# Utiliza un bucle para calcular los ingresos totales por día y almacenar estos valores en el diccionario.
+
+ingresos_por_dia = {}
+
+for venta in ventas:
+    fecha = venta["fecha"]
+    ingreso_total = venta["cantidad"] * venta["precio"]
+    if fecha in ingresos_por_dia:
+        ingresos_por_dia[fecha] += ingreso_total
+    else:
+        ingresos_por_dia[fecha] = ingreso_total
+print(ingresos_por_dia)
+
+Explicación: Como primer paso se realiza el diccionario ingresos_por_dia vacío para guardar los ingresos de cada fecha. Después, con el for se recorre cada venta de la lista ventas. En cada vuelta se guarda la fecha y se calcula el ingreso total multiplicando la cantidad por el precio. Si la fecha ya existe en el diccionario, se suma ese ingreso al valor que ya tenía, y si no existe, se crea con ese ingreso inicial. Finalmente, se muestra el diccionario con los ingresos totales de cada día.
+
+Imprime: {'2024-01-01': 14000, '2024-01-02': 9000, '2024-01-03': 8000, '2024-01-04': 15000, '2024-01-05': 4500, '2024-01-06': 5000}
+    
+#6) Representación de Datos:
+# Crea un diccionario llamado resumen_ventas donde las claves sean los nombres de los productos y los valores sean diccionarios anidados. Cada diccionario anidado debe contener:
+# «cantidad_total»: la cantidad total vendida del producto.
+# «ingresos_totales»: los ingresos totales generados por la venta del producto.
+# «precio_promedio»: el precio promedio de venta del producto.
+
+resumen_ventas = {}
+
+for venta in ventas:
+    prod = venta["producto"]
+    cant = venta["cantidad"]
+    precio = venta["precio"]
+    if prod not in resumen_ventas:
+        resumen_ventas[prod] = {
+            "cantidad_total": 0,
+            "ingresos_totales": 0,
+            "precio_promedio": 0
+        }
+    resumen_ventas[prod]["cantidad_total"] += cant
+    resumen_ventas[prod]["ingresos_totales"] += cant * precio
+for prod, datos in resumen_ventas.items():
+    datos["precio_promedio"] = datos["ingresos_totales"] / datos["cantidad_total"]
+
+print(resumen_ventas)
+
+Explicación: Para comenzar se crea el diccionario resumen_ventas vacío para guardar la información de cada producto. Después, con el for se recorre cada venta de la lista ventas. En cada vuelta se obtiene el producto, la cantidad y el precio. Si el producto todavía no existe en el diccionario, se crea con los valores iniciales en cero. Luego se va sumando la cantidad vendida en cantidad_total y el dinero generado en ingresos_totales. Después, con otro for, se calcula el precio_promedio dividiendo los ingresos totales por la cantidad total vendida. Finalmente, se muestra el diccionario con el resumen completo de cada producto.
+
+Imprime: {'remera': {'cantidad_total': 7, 'ingresos_totales': 14000, 'precio_promedio': 2000.0}, 'pantalon': {'cantidad_total': 3, 'ingresos_totales': 9000, 'precio_promedio': 3000.0}, 'campera': {'cantidad_total': 2, 'ingresos_totales': 8000, 'precio_promedio': 4000.0}, 'zapatilla': {'cantidad_total': 10, 'ingresos_totales': 15000, 'precio_promedio': 1500.0}, 'media': {'cantidad_total': 9, 'ingresos_totales': 4500, 'precio_promedio': 500.0}, 'musculosa': {'cantidad_total': 5, 'ingresos_totales': 5000, 'precio_promedio': 1000.0}}
